@@ -6,6 +6,8 @@ import express from 'express'
 import cors from 'cors'
 import connectToDb from './db/connectToDb.js'
 import authRoutes from './routes/auth.route.js'
+import cookieParser from 'cookie-parser';
+
 
 
 connectToDb()
@@ -14,9 +16,15 @@ connectToDb()
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: 'http://localhost:5173',
+    credentials: true
+  }
+));
 
 
 let message = 'Hello, World!';

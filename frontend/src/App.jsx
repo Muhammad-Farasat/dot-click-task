@@ -1,33 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Signup from './pages/Signup'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
+import Cookies from 'js-cookie'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
+import CheckEmail from './pages/CheckEmail'
+import VerifyEmail from './pages/VerifyEmail'
+import UsersTable from './components/UserTable'
+import EditUser from './pages/EditUser'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const authUser = Cookies.get('authorization')
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <Routes>
+
+        {/* <Route path='/' element={authUser ? <Dashboard /> : <Navigate to={'/login'} />} /> */}
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route index element={<UsersTable />} />
+          <Route path="users" element={<UsersTable />} />
+          <Route path="edit-user/:id" element={<EditUser />} />
+        </Route>
+
+
+        <Route path='/signup' element={!authUser ? <Signup /> : <Navigate to={'/'} />} />
+        <Route path='/login' element={!authUser ? <Login /> : <Navigate to={'/'} />} />
+        <Route path="/check-email" element={<CheckEmail />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+
+      </Routes>
+
+      {/* <Signup /> */}
+      <Toaster />
+
     </>
   )
 }

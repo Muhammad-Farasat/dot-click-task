@@ -7,7 +7,7 @@ export const signup = async (req, res) => {
     try {
 
         const { username, email, password, confirmPassword } = req.body
-
+        
         if (password !== confirmPassword) {
             return res.status(400).json({ message: "Passwords don't match " })
         }
@@ -20,7 +20,7 @@ export const signup = async (req, res) => {
 
         if (checkEmail) {
             return res.status(400).json({ error: "User already exists" })
-        }
+        }        
 
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password, salt)
@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
 
         const token = jwt.sign({ id: data._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
-        // await senderEmailVerification(email, token)
+        await senderEmailVerification(email, token)
 
         return res.status(200).json({ sucess: true, user, token })
 
@@ -66,9 +66,9 @@ export const login = async (req, res) => {
             return res.status(400).json({ success: false, message: "Incorrect password" })
         }
 
-        // if (!user.verified) {
-        //     return res.status(400).json({ message: "Not verified" })
-        // }
+        if (!user.verified) {
+            return res.status(400).json({ message: "Not verified" })
+        }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
@@ -83,6 +83,7 @@ export const login = async (req, res) => {
 }
 
 export const logout = async (req, res) => {
+    
     try {
 
         res.clearCookie('authorization', { httpOnly: false, secure: true, sameSite: "None", })
@@ -95,9 +96,24 @@ export const logout = async (req, res) => {
     }
 }
 
-export const userDetail = async (req, res) => {
-}
+export const adminDetail = async (req, res) => {
+    try {
+        const id = req.user.id
 
+        const user = await User.findById(id)
+
+        if (!user) {
+            return res.status(400).json({ message: "User not found" })
+        }
+
+        return res.status(200).json({ success: true, user })
+
+
+    } catch (error) {
+        console.error("Error in controller", error);
+        res.status(500).json({ error: "Internal servre error" })
+    }
+}
 
 export const verifyEmail = async (req, res) => {
     try {
@@ -105,7 +121,7 @@ export const verifyEmail = async (req, res) => {
 
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('Decoded token:', decoded);
+        // console.log('Decoded token:', decoded);
 
         const user = await User.findById(decoded.id);
 
