@@ -1,0 +1,44 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
+
+import express from 'express'
+import cors from 'cors'
+import connectToDb from './db/connectToDb.js'
+import authRoutes from './routes/auth.route.js'
+
+
+connectToDb()
+
+
+const app = express();
+const port = process.env.PORT || 4000;
+
+app.use(express.json());
+
+app.use(cors());
+
+
+let message = 'Hello, World!';
+
+// GET route
+// app.get('/message', (req, res) => {
+//   res.json({ message }); // Return the current message
+// });
+
+
+app.use(authRoutes)
+  
+
+  
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+  
+app.listen(port, (error) => {
+    if (!error) {
+      console.log(`Example app listening on port ${port}`);
+    } else {
+      console.log('This is error!', error);
+    }
+});
