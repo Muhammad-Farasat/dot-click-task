@@ -19,12 +19,7 @@ const port = process.env.PORT || 4000;
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors(
-  {
-    origin: 'http://localhost:5173',
-    credentials: true
-  }
-));
+app.use(cors());
 
 
 let message = 'Hello, World!';
@@ -37,7 +32,11 @@ let message = 'Hello, World!';
 
 app.use(authRoutes)
   
+app.use(express.static(path.join(__dirname, '/dist')));
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
   
 app.get('/', (req, res) => {
     res.send('Hello World!');
