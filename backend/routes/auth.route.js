@@ -4,12 +4,12 @@ import { verifyToken } from '../middleware/authentication.js'
 
 const router = express.Router()
 
-router.post('/api/signup', signup)
-router.post('/api/login', login)
-router.post('/api/logout', logout)
+router.post('/signup', signup)
+router.post('/login', login)
+router.post('/logout', logout)
 
-router.get('/api/verify-email/:token', verifyEmail)
-router.get('/api/admin-detail', verifyToken, adminDetail);
+router.get('/verify-email/:token', verifyEmail)
+router.get('/admin-detail', verifyToken, adminDetail);
 
 
 

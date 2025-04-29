@@ -32,7 +32,7 @@ let message = 'Hello, World!';
 // });
 
 
-app.use(authRoutes)
+app.use('/api',authRoutes)
   
 app.use(express.static(path.join(__dirname, '/dist')));
 
