@@ -21,7 +21,7 @@ function VerifyEmail() {
                     toast.success(response.data.message);
                     setVerified(true);
                     setTimeout(() => {
-                        navigate("/", {replace: true}),3000
+                        navigate("/dashboard", {replace: true}),3000
                     });
                 }
 
