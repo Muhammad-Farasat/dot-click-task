@@ -21,10 +21,7 @@ const port = process.env.PORT || 4000;
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors({
-  origin: "https://e-finance-psi.vercel.app",
-  credentials: true
-}));
+app.use(cors());
 
 
 // app.use(cors({
@@ -44,11 +41,11 @@ console.log(path.join(__dirname, 'dist', 'index.html'));
 
 app.use('/api',authRoutes)
   
-// app.use(express.static(path.join(__dirname, '/dist')));
+app.use(express.static(path.join(__dirname, '/dist')));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-// });
+app.get('/*name', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
   
 // app.get('/', (req, res) => {
 //     res.send('Hello World!');
