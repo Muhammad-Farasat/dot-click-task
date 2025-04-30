@@ -21,7 +21,10 @@ const port = process.env.PORT || 4000;
 app.use(cookieParser());
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+  origin: "https://e-finance-psi.vercel.app",
+  credentials: true
+}));
 
 
 // app.use(cors({
