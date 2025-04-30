@@ -6,6 +6,7 @@ import LogoutBtn from './LogoutBtn';
 
 function Topbar({ setIsOpen }) {
     const [open, setOpen] = useState(false);
+    
     const [search, setSearch] = useState('');
     const { data } = useAdmin();
     const dropdownRef = useRef(null);

@@ -9,13 +9,13 @@ import authRoutes from './routes/auth.route.js'
 import cookieParser from 'cookie-parser';
 import path from 'path';
 
+const __dirname = path.resolve();
 
 
 connectToDb()
 
 
 const app = express();
-const __dirname = path.resolve();
 const port = process.env.PORT || 4000;
 
 app.use(cookieParser());
@@ -23,6 +23,11 @@ app.use(express.json());
 
 app.use(cors());
 
+
+// app.use(cors({
+//   origin: 'http://localhost:5173',
+//   credentials: true
+// }));
 
 let message = 'Hello, World!';
 
@@ -34,11 +39,11 @@ let message = 'Hello, World!';
 
 app.use('/api',authRoutes)
   
-app.use(express.static(path.join(__dirname, '/dist')));
+// app.use(express.static(path.join(__dirname, '/dist')));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
   
 // app.get('/', (req, res) => {
 //     res.send('Hello World!');

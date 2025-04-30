@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import LogoutBtn from './LogoutBtn';
 
 function Sidebar({ isOpen, setIsOpen }) {
+   
     const links = [
         { name: 'User Table', icon: <FaTable />, path: '/dashboard' },
         { name: 'Lab Test', icon: <FaFlask />, path: '/dashboard/lab-test' },

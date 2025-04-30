@@ -32,7 +32,7 @@ function App() {
         <Route path='/login' element={!authUser ? <Login /> : <Navigate to={'/'} />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/dashboard" />} />
 
       </Routes>
 
