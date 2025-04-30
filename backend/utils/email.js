@@ -12,7 +12,6 @@ const transport = nodemailer.createTransport({
 })
 
 const frontend_url = process.env.URL
-// console.log(frontend_url);
 
 export const senderEmailVerification = async(email, token) => {
    
@@ -28,7 +27,6 @@ export const senderEmailVerification = async(email, token) => {
 
     try {
         await transport.sendMail(mailOptions)
-        // console.log("Email sent");
         
     } catch (error) {
         console.log("Can't send", error);
