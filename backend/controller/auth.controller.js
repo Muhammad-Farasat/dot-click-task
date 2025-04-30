@@ -37,7 +37,7 @@ export const signup = async (req, res) => {
 
         await senderEmailVerification(email, token)
 
-        return res.status(200).json({ sucess: true, user, token })
+        return res.status(200).json({ success: true, user, token })
 
     } catch (error) {
         console.error('Error in controller', error);
@@ -119,10 +119,7 @@ export const verifyEmail = async (req, res) => {
     try {
         const { token } = req.params
 
-
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        // console.log('Decoded token:', decoded);
-
         const user = await User.findById(decoded.id);
 
         if (!user) {
@@ -133,7 +130,14 @@ export const verifyEmail = async (req, res) => {
 
         await user.save()
 
-        res.cookie('authorization', token, { httpOnly: false, secure: true, sameSite: "none", path: '/', maxAge: 24 * 60 * 60 * 1000 })
+        // Store the token in a cookie after email verification
+        res.cookie('authorization', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
+            path: '/',
+            maxAge: 24 * 60 * 60 * 1000
+        })
 
         return res.status(200).json({ message: "Verified successfully" })
 
