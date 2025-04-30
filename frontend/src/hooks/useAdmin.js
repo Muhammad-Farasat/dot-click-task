@@ -11,7 +11,7 @@ function useAdmin() {
         try {
             setLoading(true)
             
-            const response = await axios.get(`/api/admin-detail`, {withCredentials: true})
+            const response = await axios.get(`${backend_url}/api/admin-detail`, {withCredentials: true})
             
             if (response.status === 200) {
                 setData(response.data.user.username)            

@@ -24,7 +24,6 @@ function Topbar({ setIsOpen }) {
 
     const handleSearch = (e) => {
         setSearch(e.target.value);
-        // Farasat bhai, call a search function here if needed (like update redux filter etc.)
     };
 
     return (

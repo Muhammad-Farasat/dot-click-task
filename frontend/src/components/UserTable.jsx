@@ -6,6 +6,7 @@ import { deleteUser } from '../redux/usersSlice';
 import toast from 'react-hot-toast';
 
 function UsersTable() {
+    
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
