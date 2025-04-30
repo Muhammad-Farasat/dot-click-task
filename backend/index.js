@@ -32,9 +32,11 @@ app.use(cors());
 let message = 'Hello, World!';
 
 // GET route
-// app.get('/message', (req, res) => {
-//   res.json({ message }); // Return the current message
-// });
+app.get('/message', (req, res) => {
+  res.json({ message }); 
+});
+
+console.log(path.join(__dirname, 'dist', 'index.html'));
 
 
 app.use('/api',authRoutes)
